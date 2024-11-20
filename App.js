@@ -1,0 +1,89 @@
+import React, { useState, useEffect } from "react";
+import { View, Text, Platform } from "react-native";
+import * as Location from 'expo-location';
+import { Pedometer } from "expo-sensors";
+import "./global.css"
+
+export default function App() {
+  /**
+   * 현재 위치 구독
+   */
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  // 위치 데이터 구조 분해 할당 시 예외 처리
+  const getLatLng = (location) => {
+    if (location && location.coords) {
+      const { latitude, longitude } = location.coords;
+      return { latitude, longitude };
+    }
+    return { latitude: 0, longitude: 0 };
+  };
+
+  useEffect(() => {
+    async function getCurrentLocation() {
+      
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});      
+      setLocation(getLatLng(location));
+    }
+
+    getCurrentLocation();
+  }, []);
+
+  let loc = 'Waiting...';
+  if (errorMsg) {
+    loc = errorMsg;
+  } else if (location) {
+    loc = location;
+  }
+
+  /**
+   * 걸음수 구독
+   */
+  const [isAvailable, setIsAvailable] = useState(false); // Pedometer 사용 가능 여부
+  const [stepCount, setStepCount] = useState(0);         // 현재 걸음수
+
+  useEffect(() => {
+    // Pedometer 사용 가능 여부 확인
+    Pedometer.isAvailableAsync().then(
+      (result) => setIsAvailable(result),
+      (error) => console.log("Pedometer error: ", error)
+    );
+
+    // 걸음수 구독 시작
+    const subscription = Pedometer.watchStepCount((result) => {
+      setStepCount(result.steps);
+    });
+
+    // 컴포넌트 언마운트 시 구독 해제
+    return () => subscription.remove();
+  }, []);
+
+  return (
+    <View className="items-center justify-center flex-1 bg-gray-100">
+      <Text className="text-lg font-bold text-gray-800">
+        Pedometer available: {isAvailable ? "Yes" : "No"}
+      </Text>
+      <Text className="mt-4 text-xl font-bold text-blue-500">
+        Steps taken: {stepCount}
+      </Text>
+
+
+      <Text className="text-lg font-bold text-gray-800 mt-50">
+        Current location:
+      </Text>
+      <Text className="mt-4 text-xl font-bold text-blue-500">
+        위도: {loc.latitude}
+      </Text>
+      <Text className="mt-4 text-xl font-bold text-blue-500">
+        경도: {loc.longitude}
+      </Text>
+    </View>
+  );
+}
