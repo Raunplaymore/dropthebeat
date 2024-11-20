@@ -18,6 +18,7 @@ export default function MemoInput() {
     }
   };
 
+  // test
   return (
     <View className="p-4">
       <TextInput
