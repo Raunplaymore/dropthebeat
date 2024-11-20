@@ -5,7 +5,7 @@ const toPixel = { ...Array.from(Array(1001)).map((_, i) => `${i}px`) };
 module.exports = {
   content: [
     "./App.{js,jsx,ts,tsx}",
-    "./src/**/*.{js,jsx,ts,tsx}"
+    "./components/**/*.{js,jsx,ts,tsx}",
   ],
   presets: [require("nativewind/preset")],
   theme: {
