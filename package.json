@@ -2,7 +2,7 @@
   "name": "dropthebeat",
   "license": "0BSD",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "node_modules/expo/AppEntry.js",
   "engines": {
     "node": "20.10.0"
   },
@@ -13,6 +13,9 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/vector-icons": "^14.0.4",
+    "@react-navigation/native": "^7.0.3",
+    "@react-navigation/native-stack": "^7.1.0",
     "expo": "~52.0.8",
     "expo-location": "~18.0.2",
     "expo-sensors": "^14.0.1",

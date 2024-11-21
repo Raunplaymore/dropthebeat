@@ -6,6 +6,8 @@ module.exports = {
   content: [
     "./App.{js,jsx,ts,tsx}",
     "./components/**/*.{js,jsx,ts,tsx}",
+    "./navigation/**/*.{js,jsx,ts,tsx}",
+    "./screens/**/*.{js,jsx,ts,tsx}",
   ],
   presets: [require("nativewind/preset")],
   theme: {
@@ -34,6 +36,15 @@ module.exports = {
     colors: {
       black: '#1a1a1a',
       white: '#ffffff',
+      blue: '#1fb6ff',
+      purple: '#7e5bef',
+      pink: '#ff49db',
+      orange: '#ff7849',
+      green: '#13ce66',
+      yellow: '#ffc82c',
+      grayDark: '#273444',
+      gray: '#8492a6',
+      grayLight: '#d3dce6',
       gray: {
         100: '#fafafa',
         200: '#f1f1f1',
@@ -85,6 +96,10 @@ module.exports = {
       '7xl': '46px',
     },
     extend: {
+      borderRadius: {
+        '2xl': '1rem',
+        '4xl': '2rem',
+      },
       margin: toPixel,
       padding: toPixel,
       width: toPixel,
@@ -94,5 +109,6 @@ module.exports = {
       lineHeight: toPixel,
     },
   },
-  plugins: [],
+  plugins: [
+  ],
 };
