@@ -17,6 +17,7 @@ export default function MemoList() {
       {memoList.map((memo) => (
         <View key={memo.id} className="flex-row items-center justify-between py-[10px] px-[10px] m-5 border border-gray-400 rounded-lg">
           <Text className="text-lg">{memo.content}</Text>
+          <Text className="text-sm">{memo.location.latitude}, {memo.location.longitude}</Text>
           <Button title="삭제" onPress={() => deleteMemo(memo.id)} />
         </View>
       ))}
